@@ -61,8 +61,6 @@ class Control {
 		slider.value = ld-1;
 		slider.style.width="250px";
 		slider.classList.add("pslider")
-//		slider.id = "Channel_"+c;
-//		slider.sliderID = this.colors[c];
 		slider.addEventListener('mousemove',this.MoveSlider.bind(this));
 		slider.addEventListener('change',this.MoveSlider.bind(this));
 		slider.addEventListener('touchmove',this.MoveSlider.bind(this));
@@ -159,9 +157,63 @@ class BaseGraph{
 			.range([ height, 0]);
 		this.yAxis = this.svg.append("g")
 			.call(d3.axisLeft(this.y));
+			
+	// text label for the x axis
+		this.svg.append("text")
+			.attr("transform","translate(" + (this.width/2) + " ," + (this.height + this.margin.top + 38) + ")")
+			.style("text-anchor", "middle")
+			.text("Begin der Erkrankung / date of onset of illness");
+			
+	// text label for the y axis
+		this.svg.append("text")
+			.attr("transform", "rotate(-90)")
+			.attr("y", 0 - this.margin.left)
+			.attr("x",0 - (this.height / 2))
+			.attr("dy", "1em")
+			.style("text-anchor", "middle")
+			.text("Anzahl übermittelter Fälle / knwon number");
+			
+		// Groups
+			this.colors = ["#03C","#16F","#D90","#FC0"];
+			this.groups = ["date known","new knwon","new unknown","date unknown"];
+			this.statusgroups = this.svg.selectAll("g.status").data(that.groups).enter()
+				.append("g").attr("class","status")
+				.style("fill",function(d,i){ return that.colors[i];  });
+			
+			
+			var lclrs = this.colors.slice(0,4);
+			lclrs.push("#038");
+			this.lgrps = this.groups.slice(0,4);
+			this.lgrps.push("total known");
+			var lhgt = [14,14,14,14,2];
+		// Legend
+			this.svgLegend = this.svg.append("g")
+				.attr("width", width).attr("height", height)
+				
+			this.legend = this.svgLegend.selectAll('.legend')
+				.data(this.lgrps)
+				.enter().append('g')
+				.attr("class", "legend")
+				.attr("transform", function (d, i) { return "translate(10," + (4-i) * 20 + ")" })
+
+			this.legend.append('rect')
+				.attr("x", 0)
+				.attr("y", function(d,i) {return 6-lhgt[i]/2;})
+				.attr("width", 14)
+				.attr("height", function (d,i) { return lhgt[i]; })
+				.style("fill", function (d, i) { return lclrs[i]; })
+			
+			this.legendtexts = this.legend.append('text')
+				.attr("x", 20)
+				.attr("y", 10)
+				.text(function (d, i) { return that.lgrps[i]; })
+				.attr("class", "textselected")
+				.style("text-anchor", "start")
+				.style("font-size", 15)
 	}
 	
 	DrawGraph(date) {
+		var that = this;
 		let data = this.data;
 		if (typeof(date) === "undefined") {
 			date = data.dates[data.dates.length-1];
@@ -170,6 +222,7 @@ class BaseGraph{
 		this.selected_date = date;
 
 		let bydaydata = [[],[],[],[]];
+		let sums = [0,0,0,0,0];
 		data.days.forEach(function(d,i){
 			let onsets = data.datasets["onsets"][date_i][i];
 			let diff = data.datasets["onsets_diff"][date_i][i];
@@ -185,24 +238,23 @@ class BaseGraph{
 				bydaydata[2].push({"y":onsets+mdiff,"h":mdiff});
 				bydaydata[3].push({"y":onsets+meldungs,"h":Math.max(0,meldungs-mdiff)});
 			}
+			sums[0] += onsets-diff;
+			sums[1] += diff;
+			sums[2] += mdiff;
+			sums[3] += meldungs-mdiff;
+			sums[4] += data.datasets["onsets"][data.dates.length-1][i];
 		});
 		
-		
-		// this.maxline = d3.svg.line()
-	// 		.x( data.days )
-	//		.y( data.datasets["onsets"][data.days.length-1] )
-
-		var that = this;
 	// Max-Line
-		this.svg.append("path")
-			.attr("class","line")
-			.attr("d",this.maxline);
-		
-	// Groups
-		var colors = ["#03C","#16F","#D90","#FC0"];
-		this.statusgroups = this.svg.selectAll("g.status").data(["known","new knwon","new unknown","unknown"]).enter()
-			.append("g").attr("class","status")
-			.style("fill",function(d,i){ return colors[i];  });
+		var maxdata = data.datasets["onsets"][data.dates.length-1];
+		this.maxline = d3.line()
+			.x( function(d,i) {return that.x(data.days[i])+that.x.bandwidth()/2} )
+			.y( function(d,i) {return that.y(maxdata[i])} )
+
+		this.maxlinesvg = this.svg.append("path")
+			.data([data.datasets["onsets"][data.dates.length-1]])
+			.attr("class","maxline")
+			.attr("d",that.maxline);
 	
 	// Bars
 		this.statusgroups.selectAll("rect")
@@ -214,31 +266,20 @@ class BaseGraph{
 				.attr("width", this.x.bandwidth())
 			//	.attr("height", function(d,i) { return that.height - that.y(data.datasets["onsets"][i]); })
 				.attr("height",function(d,i) {return that.height-that.y(d.h)})
-		
-	// text label for the x axis
-		this.svg.append("text")
-			.attr("transform","translate(" + (this.width/2) + " ," + (this.height + this.margin.top + 38) + ")")
-			.style("text-anchor", "middle")
-			.text("Begin der Erkrankung / date of onset of illness");
-			
-	// text label for the y axis
-		this.svg.append("text")
-			.attr("transform", "rotate(-90)")
-			.attr("y", 0 - this.margin.left)
-			.attr("x",0 - (this.height / 2))
-			.attr("dy", "1em")
-			.style("text-anchor", "middle")
-			.text("Anzahl übermittelter Fälle / knwon number");
+	// Legend
+		this.legend.select("text").data(sums)
+			.text(function (d, i) {return that.lgrps[i]+" ("+d+")"; })
 	}
 	
 	UpdateGraph(date) {
-		let that = this;
+		
 		let data = this.data;
 		let date_i = data.ddates[date];
 		if (date != this.selected_date) {
 			this.selected_date = date;
 			
 			let bydaydata = [[],[],[],[]];
+			let sums = [0,0,0,0,0];
 			let ymax = 0;
 			data.days.forEach(function(d,i){
 				let onsets = data.datasets["onsets"][date_i][i];
@@ -254,6 +295,11 @@ class BaseGraph{
 					bydaydata[2].push({"y":onsets+mdiff,"h":mdiff});
 					bydaydata[3].push({"y":onsets+meldungs,"h":Math.max(0,meldungs-mdiff)});
 				}
+				sums[0] += onsets-diff;
+				sums[1] += diff;
+				sums[2] += mdiff;
+				sums[3] += meldungs-mdiff;
+				sums[4] += data.datasets["onsets"][data.dates.length-1][i];
 				ymax = Math.max(ymax,onsets+meldungs);
 			});
 			
@@ -263,11 +309,19 @@ class BaseGraph{
 			
 //			this.svg.transition(200);
 			this.y.domain([0,ymax]);
+			let that = this;
 			this.statusgroups.selectAll("rect").data(function(d,i){ return bydaydata[i];}).transition(2000)
 				.attr("y",function(d,i) { return that.y(d.y); })
 				.attr("height",function(d,i) {return that.height-that.y(d.h); })
 			
+			this.maxlinesvg.transition().duration(100).call(that.maxline)
+				.attr("d",that.maxline)
+			
 			this.yAxis.transition().duration(100).call(d3.axisLeft(this.y));
+		// Legend
+			this.legend.select("text").data(sums)
+				.text(function (d, i) { return that.lgrps[i]+" ("+d+")"; })
+		
 		}
 	}
 };

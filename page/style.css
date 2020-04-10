@@ -2,6 +2,13 @@ p {
 	font-size : 10pt;
 }
 
+.maxline {
+	fill :none;
+	stroke : #038;
+	stroke-width:2;
+	opacity:.5;
+}
+
 /* Slider Stuff */
 .pslidecontainer {
 /*  width: 100%;*/
