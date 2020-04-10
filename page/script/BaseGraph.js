@@ -34,6 +34,7 @@ class Control {
 		}
 		this.div.style.width = "100%";
 		this.div.style.display = "flex";
+		this.div.style.margin = "18px";
 		
 		let ld = this.data.dates.length;
 		let first = this.data.dates[0];
@@ -59,7 +60,7 @@ class Control {
 		slider.min = 0;
 		slider.max = ld-1;
 		slider.value = ld-1;
-		slider.style.width="250px";
+		slider.style.width="300px";
 		slider.classList.add("pslider")
 		slider.addEventListener('mousemove',this.MoveSlider.bind(this));
 		slider.addEventListener('change',this.MoveSlider.bind(this));

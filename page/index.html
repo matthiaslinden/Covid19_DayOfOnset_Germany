@@ -26,17 +26,18 @@
   </head>
   <body id="body" onload="onBodyLoad()">
   <header></header>
-  <div style="width:900px">
+  <div style="max-width:900px;display: block;margin: 25px auto 0">
   <section>
   <h1>Übersicht</h1>
-  <p>Seit dem 04.03.2020 veröffentlicht das Rober Koch Institut (RKI) täglich einen Lagebericht für Deutschland zu COVID-19<sup><a href="#r_RKIdaily">RKIdaily</a></sup>. Im Lagebericht enthalten ist eine Übersichtsgrafik der bekannten Fälle, die nach Datum des Krankheitsbeginns aufgetragen werden (Abb. 3 auf Seite 3/4). Für die Modellierung der Verbreitung ist der Zeitpunkt des Krankheitsbeginns relevant, da damit die infektiöse Phase datiert werden kann. Eine entsprechende Analyse ist am 09.04.2020 vom RKI veröffentlicht worden<sup><a href="#r_RKI409">RKI409</a></sup>.</p>
+  <p>Für die Modellierung der Verbreitung von COVID-19 ist der Zeitpunkt des Krankheitsbeginns relevant, da damit die infektiöse Phase datiert werden kann. Seit dem 04.03.2020 veröffentlicht das Rober Koch Institut (RKI) täglich einen Lagebericht für Deutschland zu COVID-19<sup><a href="#r_RKIdaily">RKIdaily</a></sup>. Im Lagebericht enthalten ist eine Übersichtsgrafik der bekannten Fälle, die nach Datum des Krankheitsbeginns aufgetragen werden (Abb. 3 auf Seite 3/4). Eine entsprechende Analyse ist am 09.04.2020 vom RKI veröffentlicht worden<sup><a href="#r_RKI409">RKI409</a></sup>.</p>
   <p></p>
   
   <h1>Daten</h1>
-  <p>In den öffentliche zugänglichen Datensätzenm wie den Datenbanken der arcgis-Dashboards der Johns Hopkins University (JHU)<sup><a href="#r_JHUdash">JHUdash</a></sup> oder des RKI<sup><a href="#r_RKIdash">RKIdash</a></sup>, sind umfangreiche Daten zu den Fallzahlen hinterlegt, am Beispiel der RKI-Daten beispielsweise Bundesland, Kries, Geschlecht, Altersgruppe, neue Fälle und Datum. Nicht hinterlegt ist der Beginn der Krankheit. Der Krankheitsbeginn ist, wenn vorhanden, Teil der ans RKI übermittelten Meldedaten. In der oben erwähnten Analyse des RKI wird ausgehend vom Krankheitsbeginn modelliert.</p>
+  <p>In den öffentliche zugänglichen Datensätzenm wie den Datenbanken der arcgis-Dashboards der Johns Hopkins University (JHU)<sup><a href="#r_JHUdash">JHUdash</a></sup> oder des RKI<sup><a href="#r_RKIdash">RKIdash</a></sup>, sind umfangreiche Daten zu den Fallzahlen hinterlegt, am Beispiel der RKI-Daten beispielsweise Bundesland, Kries, Geschlecht, Altersgruppe, neue Fälle und Datum. Nicht hinterlegt ist der Beginn der Krankheit. Der Krankheitsbeginn ist, wenn vorhanden, Teil der ans RKI übermittelten Meldedaten. In der oben erwähnten Analyse des RKI<sup><a href="#r_RKI409">RKI409</a></sup> wird ausgehend vom Krankheitsbeginn modelliert.</p>
   <h3>Datenquelle</h3>
-  <p>Die täglich veröffentlichten Grafiken aus den Lageberichten wurden per Hand digitalisiert und dienen als Basis der folgenden Analyse. Die Auflösung in den .pdfs reicht für ±10 Zähler an jedem Tag aus. Ist der Zeitpunkt des Krankheitsbeginns nicht bekannt oder ist der Fall asymptomatisch verlaufen, wird das Meldedatum verwendet. Die Grafik weist diese Fälle gesondert aus.</p>
+  <p>Die täglich veröffentlichten Grafiken aus den Lageberichten wurden per Hand digitalisiert und dienen als Basis der folgenden Analyse. Die Auflösung in den .pdfs reicht für ±10 Zähler an jedem Tag aus. Ist der Zeitpunkt des Krankheitsbeginns nicht bekannt oder ist der Fall asymptomatisch verlaufen, wird vom RKI das Meldedatum verwendet. Die Grafik in den Lageberichten weist diese Fälle gesondert aus.<br><a href="#simpleRKIgraph"><strong>Abbildung 1</strong></a> stellt die Daten aller bisherigen Lagebreichte zusammen. Die Datenlage lässt sich für jedes Datum mit Situationsbericht auswählen. Der verwendete Datensatz ist als .json verfügbar: <a href="script/data.json">data.json</a></p>
   <p>Stand 10.04.2020 ist im Lagebericht vom 19.03.2020 fälschlicherweise die Abbildung des Vortags enthalten (de/en). Für den 19.03.2020 kommen daher keine neuen Fälle hinzu, der 20.03.2020 verzeichnet einen überhöhten Anstieg.</p>
+  <p>Die in der Analyse des RKI vom 09.04.2020<sup><a href="#r_RKI409">RKI409</a></sup> präsentierten Fallzahlen nach Krankheitsbeginn weichen von den Balkendiagrammen der täglichen Lageberichte leicht ab. Eine tiefergehende Analyse steht aus.</p>
   <h3>Anzahl bekannter Fälle nach Tag des Krankheitsbeginns (analog Abb. 3 in den täglichen Lageberichten)</h3>
   <div id="firstGraph">
   <div id="simpleRKIgraph"></div>
@@ -47,12 +48,12 @@
   </section>
   <section>
 	<h1>Quellen</h1>
-	<div>
+	<div id="sources">
 		<ol>
-			<li><p id="r_RKIdaily">Tägliche Lageberichte des RKI für Deutschland zu COVID-19, <a href="https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Situationsberichte/Archiv.html">https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Situationsberichte/Archiv.html</a>(09.04.2020)</p></li>
-			<li><p id="r_RKI409">an der Heiden M, Hamouda O: Schätzung der aktuellen Entwicklung der SARS-CoV-2-Epidemie in Deutschland – Nowcasting. Epid Bull 2020;17:10 – 15 | DOI 10.25646/6692 <a href="https://www.rki.de/DE/Content/Infekt/EpidBull/Archiv/2020/17/Art_02.html">https://www.rki.de/DE/Content/Infekt/EpidBull/Archiv/2020/17/Art_02.html</a>(09.04.2020)</p></li>
-			<li><p id="r_JHUdash">JHU Dashboard<a href="https://coronavirus.jhu.edu/map.html">https://coronavirus.jhu.edu/map.html</a>(10.04.2020)</p></li>
-			<li><p id="r_RKIdash">RKI Dashboard<a href="https://experience.arcgis.com/experience/478220a4c454480e823b17327b2bf1d4">https://experience.arcgis.com/experience/478220a4c454480e823b17327b2bf1d4</a>(10.04.2020)</p></li>
+			<li><p id="r_RKIdaily">RKIdaily: Tägliche Lageberichte des RKI für Deutschland zu COVID-19, <a href="https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Situationsberichte/Archiv.html">https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Situationsberichte/Archiv.html</a> (Stand: 09.04.2020)</p></li>
+			<li><p id="r_RKI409">RKI409: an der Heiden M, Hamouda O: Schätzung der aktuellen Entwicklung der SARS-CoV-2-Epidemie in Deutschland – Nowcasting. Epid Bull 2020;17:10 – 15 | DOI 10.25646/6692 <a href="https://www.rki.de/DE/Content/Infekt/EpidBull/Archiv/2020/17/Art_02.html">https://www.rki.de/DE/Content/Infekt/EpidBull/Archiv/2020/17/Art_02.html</a> (Stand: 09.04.2020)</p></li>
+			<li><p id="r_JHUdash">JHUdash: JHU Dashboard<a href="https://coronavirus.jhu.edu/map.html">https://coronavirus.jhu.edu/map.html</a> (Stand: 10.04.2020)</p></li>
+			<li><p id="r_RKIdash">RKIdash: RKI Dashboard<a href="https://experience.arcgis.com/experience/478220a4c454480e823b17327b2bf1d4">https://experience.arcgis.com/experience/478220a4c454480e823b17327b2bf1d4</a> (Stand: 10.04.2020)</p></li>
 		</ol>
 	</div>
   </section>
