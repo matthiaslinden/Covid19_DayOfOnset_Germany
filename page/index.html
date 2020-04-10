@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Covid-19 Calculator Germany</title>
+	
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	
+	<script src="script/d3.js"></script>
+	<script src="script/BaseGraph.js"></script>
+	<script src="script/data.json"></script>
+	<script src="script/interactivity.js"></script>
+	
+    <style type="text/css" media="screen">
+    body {
+      margin:0;
+      padding:0;
+      background-color: white;
+    }
+    </style>
+    <script type="text/javascript">
+		
+
+    </script>
+  </head>
+  <body id="body" onload="onBodyLoad()">
+  <header></header>
+  <section>
+  <h1>Übersicht</h1>
+  <p>Seit dem 04.03.2020 veröffentlicht das RKI täglich einen Lagebericht für Deutschland zu COVID-19<sup><a href="#r_RKIdaily">RKIdaily</a></sup>. Im Lagebericht enthalten ist eine Übersichtsgrafik der bekannten Fälle, die nach Datum des Krankheitsbeginns aufgetragen werden (Abb. 3 auf Seite 3/4). Für die Modellierung der Verbreitung ist der Zeitpunkt des Krankheitsbeginns relevant, da damit die infektiöse Phase datiert werden kann. Eine entsprechende Analyse ist am 09.04.2020 vom RKI veröffentlicht worden<sup><a href="#r_RKI409">RKI409</a></sup>.</p>
+  <p></p>
+  
+  <h1>Daten</h1>
+  <h3>Datenquelle</h3>
+  <p>Die täglich veröffentlichten Grafiken aus den Lageberichten wurden per Hand digitalisiert und dienen als Basis der folgenden Analyse. Die Auflösung in den .pdfs reicht für ±10 Zähler an jedem Tag aus. Ist der Zeitpunkt des Krankheitsbeginns nicht bekannt oder ist der Fall asymptomatisch verlaufen, wird das Meldedatum verwendet. Die Grafik weist diese Fälle gesondert aus.</p>
+  <p>Stand 10.04.2020 ist im Lagebericht vom 19.03.2020 fälschlicherweise die Abbildung des Vortags enthalten (de/en). Für den 19.03.2020 kommen daher keine neuen Fälle hinzu, der 20.03.2020 verzeichnet einen überhöhten Anstieg.</p>
+  <h3>Anzahl bekannter Fälle nach Tag des Krankheitsbeginns (analog Abb. 3 in den täglichen Lageberichten)</h3>
+  <div id="firstGraph">
+  <div id="simpleRKIgraph"></div>
+  <div id="GraphControl1"></div>
+  <div style="width:100%"><p><strong>Abb. 1:</strong>Bewege Auswahlslider um den Lagebericht auszuwählen. / Move slider to pick <em>date of reporting</em>.</p></div>
+  
+  
+  </section>
+  <section>
+	<h1>Quellen</h1>
+	<div>
+		<ol>
+			<li><p id="r_RKIdaily">Tägliche Lageberichte des RKI für Deutschland zu COVID-19, <a href="https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Situationsberichte/Archiv.html">https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Situationsberichte/Archiv.html</a></p></li>
+			<li><p id="r_RKI409">an der Heiden M, Hamouda O: Schätzung der aktuellen Entwicklung der SARS-CoV-2-Epidemie in Deutschland – Nowcasting. Epid Bull 2020;17:10 – 15 | DOI 10.25646/6692 <a href="https://www.rki.de/DE/Content/Infekt/EpidBull/Archiv/2020/17/Art_02.html">https://www.rki.de/DE/Content/Infekt/EpidBull/Archiv/2020/17/Art_02.html</a></p>
+		</li></ol>
+	</div>
+  </section>
+  <section>
+	  <h1>Timeline of this document</h1>
+	  <ol>
+		  <li><strong>10.04.2020:</strong> Initial Realease, Abb. 1</li>
+	  <ol>
+  </section>
+  <section>
+	  Kontakt: <a href="mailto:matthias.linden@gmx.de">matthias.linden@gmx.de</a> oder
+	  <a style="background-color:#ABF" href="https://twitter.com/matthiaslinden">matthiaslinden via Twitter</a>
+  </section>
+
+  <footer></footer>
+  </body>
+</html>
