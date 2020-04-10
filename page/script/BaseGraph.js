@@ -162,7 +162,7 @@ class BaseGraph{
 		this.svg.append("text")
 			.attr("transform","translate(" + (this.width/2) + " ," + (this.height + this.margin.top + 38) + ")")
 			.style("text-anchor", "middle")
-			.text("Begin der Erkrankung / date of onset of illness");
+			.text("Beginn der Erkrankung / date of onset of illness");
 			
 	// text label for the y axis
 		this.svg.append("text")
@@ -210,6 +210,10 @@ class BaseGraph{
 				.attr("class", "textselected")
 				.style("text-anchor", "start")
 				.style("font-size", 15)
+			
+		// Labels
+			this.lable = this.svg.append("g").attr('transform', 'translate(' + [margin.left - 0, margin.top] + ')');
+			this.lable.text = this.lable.append("text");
 	}
 	
 	DrawGraph(date) {
