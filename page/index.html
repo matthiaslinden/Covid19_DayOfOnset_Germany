@@ -9,6 +9,7 @@
 	
 	<script src="script/d3.js"></script>
 	<script src="script/BaseGraph.js"></script>
+	<script src="script/Simulation.js"></script>
 	<script src="script/data.json"></script>
 	<script src="script/interactivity.js"></script>
 	
@@ -28,12 +29,18 @@
   <header></header>
   <div style="max-width:900px;display: block;margin: 25px auto 0">
   <section>
+  <h1>Was soll hier erreicht werden? - work in progress -</h1>
+  <p>Nachdem weitreichende Maßnahmen im März 2020 eine Eindämmung der Verbreitung von COVID-19 erreicht haben (R &asymp; 1), steht die Frage im Raum, wie es weitergehen kann. Unschschiedliche Maßnahmen führen zu spezifischen Anzahlen an Folgefällen. Die Anzahl der Folgefälle steht in direktem Verhältnis zur Verdoppelungszeit. Für einen Betrachtungszeitraum mit konstantem R > 1 wächst die Zahl der Fälle exponentiell, ebenso wie die Zahl der täglichen Neuinfektionen. Die Eigenschaften exponentieller Prozesse sind oft nicht intuitiv, insbesondere nachdem das Wachstum (der Neuinfektionen) zwischenzeitlich zum Erliegen gekommen ist und der Wechsel ins exponentielle Regime bevorsteht.</p>
+  <p>Die Bewertung eines Zeitraumes wird erschwert, da durch Inkubationszeit, Zeit bis zur Diagnose und Meldeverzögerung, erst nach 2-3 Wochen belastbare Daten vorliegen. Ein besseres Verständnis der verzögernden Prozesse erlaubt eine frühere Bewertung der Lage.</p>
+  <p>Anhand eines einfachen Modells sollen Varianten der Auflockerung der Maßnahmen vorgestellt werden und deren Bewertbarkeit geprüft und veranschaulicht werden.</p>
   <h1>Übersicht</h1>
-  <p>Für die Modellierung der Verbreitung von COVID-19 ist der Zeitpunkt des Krankheitsbeginns relevant, da damit die infektiöse Phase datiert werden kann. Seit dem 04.03.2020 veröffentlicht das Rober Koch Institut (RKI) täglich einen Lagebericht für Deutschland zu COVID-19<sup><a href="#r_RKIdaily">RKIdaily</a></sup>. Im Lagebericht enthalten ist eine Übersichtsgrafik der bekannten Fälle, die nach Datum des Krankheitsbeginns aufgetragen werden (Abb. 3 auf Seite 3/4). Eine entsprechende Analyse ist am 09.04.2020 vom RKI veröffentlicht worden<sup><a href="#r_RKI409">RKI409</a></sup>.</p>
+  <p>Für die Modellierung der Verbreitung von COVID-19 ist der Zeitpunkt des Krankheitsbeginns (date of onset of illness) relevant, da damit die infektiöse Phase datiert werden kann. Mit dem Ende der Inkubationszeit kann bei einem Patienten mit Symptomen davon ausgegangen werden, dass dieser Andere anstecken kann. Auf bestehende Untersuchungen wird später verwiesen.
+	  
+	   Seit dem 04.03.2020 veröffentlicht das Rober Koch Institut (RKI) täglich einen Lagebericht für Deutschland zu COVID-19<sup><a href="#r_RKIdaily">RKIdaily</a></sup>. Im Lagebericht enthalten ist eine Übersichtsgrafik der bekannten Fälle, die nach Datum des Krankheitsbeginns aufgetragen werden (Abb. 3 auf Seite 3/4). Eine entsprechende Analyse ist am 09.04.2020 vom RKI veröffentlicht worden<sup><a href="#r_RKI409">RKI409</a></sup>. </p>
   <p></p>
   
   <h1>Daten</h1>
-  <p>In den öffentliche zugänglichen Datensätzenm wie den Datenbanken der arcgis-Dashboards der Johns Hopkins University (JHU)<sup><a href="#r_JHUdash">JHUdash</a></sup> oder des RKI<sup><a href="#r_RKIdash">RKIdash</a></sup>, sind umfangreiche Daten zu den Fallzahlen hinterlegt, am Beispiel der RKI-Daten beispielsweise Bundesland, Kries, Geschlecht, Altersgruppe, neue Fälle und Datum. Nicht hinterlegt ist der Beginn der Krankheit. Der Krankheitsbeginn ist, wenn vorhanden, Teil der ans RKI übermittelten Meldedaten. In der oben erwähnten Analyse des RKI<sup><a href="#r_RKI409">RKI409</a></sup> wird ausgehend vom Krankheitsbeginn modelliert.</p>
+  <p>In den öffentliche zugänglichen Datensätzenm wie den Datenbanken der arcgis-Dashboards der Johns Hopkins University (JHU)<sup><a href="#r_JHUdash">JHUdash</a></sup> oder des RKI<sup><a href="#r_RKIdash">RKIdash</a></sup>, sind umfangreiche Daten zu den Fallzahlen hinterlegt, am Beispiel der RKI-Daten beispielsweise Bundesland, Kries, Geschlecht, Altersgruppe, neue Fälle und das Meldeatum. Nicht hinterlegt ist der Beginn der Krankheit. Der Krankheitsbeginn ist, wenn vorhanden, Teil der ans RKI übermittelten Meldedaten. In der oben erwähnten Analyse des RKI<sup><a href="#r_RKI409">RKI409</a></sup> wird ausgehend vom Krankheitsbeginn modelliert.</p>
   <h3>Datenquelle</h3>
   <p>Die täglich veröffentlichten Grafiken aus den Lageberichten wurden per Hand digitalisiert und dienen als Basis der folgenden Analyse. Die Auflösung in den .pdfs reicht für ±10 Zähler an jedem Tag aus. Ist der Zeitpunkt des Krankheitsbeginns nicht bekannt oder ist der Fall asymptomatisch verlaufen, wird vom RKI das Meldedatum verwendet. Die Grafik in den Lageberichten weist diese Fälle gesondert aus.<br><a href="#simpleRKIgraph"><strong>Abbildung 1</strong></a> stellt die Daten aller bisherigen Lagebreichte zusammen. Die Datenlage lässt sich für jedes Datum mit Situationsbericht auswählen. Der verwendete Datensatz ist als .json verfügbar: <a href="script/data.json">data.json</a></p>
   <p>Stand 10.04.2020 ist im Lagebericht vom 19.03.2020 fälschlicherweise die Abbildung des Vortags enthalten (de/en). Für den 19.03.2020 kommen daher keine neuen Fälle hinzu, der 20.03.2020 verzeichnet einen überhöhten Anstieg.</p>
@@ -43,31 +50,60 @@
   <div id="simpleRKIgraph"></div>
   <div id="GraphControl1"></div>
   <div style="width:100%"><p><strong>Abb. 1:</strong>Bewege Auswahlslider um den Lagebericht auszuwählen. Die Legende zeigt die jeweils dargestellte Gesamtanzahl an Fällen in Klammern. Als durchgezogene Linie sind die Fallzahlen aus dem aktuellsten Lagebericht eingezeichnet. <em>new unknown</em> Fälle, die an der Spitze der Balken angezeigt werden entsprechen einer Verringerung gegenüber dem Vortag. / Move slider to pick <em>date of reporting</em>.</p></div>
+  <h3>Vergleich der Lageberichte</h3>
+  <p>Das CDC veröffentlicht für die USA regelmäßig neue Zahlen für <em>cases by date of onset of illness</em><sup><a href="#r_CDCooi">CDCooi</a></sup>.Verglichen mit den RKI-Berichten, werden die Zahlen zusammen mit der Grafik veröffentlicht, Daten vergangener Lageberichte stehen beim CDC nicht direkt zur Verfügung.</p>
+  <p>Durch Vergleich der RKI Daten einzelner Lageberichte für Deutschland lassen sich Ausagen treffen, wann ein Krankheitsbeginn als neue Meldung in einem Lagebericht auftaucht.Mit Hilfe dieser Informationen lässt sicht abschätzen, wie groß der Anteil bereits erfasster Krankheitsfälle für einen Zeitpunkt ist. Je länger der Zeitpunkt des Krankheitsbeginns zurückliegt, desto mehr Fälle die an diesem Tage begonnen sind in nachfolgenden Lageberichten erfasst. </p>
+  </section>
   
+  <section>
+  <h3></h3>
+	  <div id="complexRKIgraphDiff"></div>
+	  <div style="width:100%"><p><strong>Abb. 2:</strong>Veränderung der Anzahl der bekannten Krankheitsbeginne in einem Lagebericht.</p></div>
+  </section>
+  
+  <section>
+  <h1>Dynamik nach Aufhebung von Maßnahmen</h1>
+  <p>
+  </p>
+  <h3>Rahmenbediungungen</h3><p>
+  <ol>
+	  <li></li>
+  </ol></p>
+  <h3>Maßnamen</h3>
+  <p></p>
+  
+  <h3>Simulator</h3>
+  <div id="simpleSimulator"></div>
+  <div style="width:100%"><strong>Abb :</strong></div>
   
   </section>
   <section>
 	<h1>Quellen</h1>
 	<div id="sources">
 		<ol>
-			<li><p id="r_RKIdaily">RKIdaily: Tägliche Lageberichte des RKI für Deutschland zu COVID-19, <a href="https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Situationsberichte/Archiv.html">https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Situationsberichte/Archiv.html</a> (Stand: 09.04.2020)</p></li>
-			<li><p id="r_RKI409">RKI409: an der Heiden M, Hamouda O: Schätzung der aktuellen Entwicklung der SARS-CoV-2-Epidemie in Deutschland – Nowcasting. Epid Bull 2020;17:10 – 15 | DOI 10.25646/6692 <a href="https://www.rki.de/DE/Content/Infekt/EpidBull/Archiv/2020/17/Art_02.html">https://www.rki.de/DE/Content/Infekt/EpidBull/Archiv/2020/17/Art_02.html</a> (Stand: 09.04.2020)</p></li>
-			<li><p id="r_JHUdash">JHUdash: JHU Dashboard<a href="https://coronavirus.jhu.edu/map.html">https://coronavirus.jhu.edu/map.html</a> (Stand: 10.04.2020)</p></li>
-			<li><p id="r_RKIdash">RKIdash: RKI Dashboard<a href="https://experience.arcgis.com/experience/478220a4c454480e823b17327b2bf1d4">https://experience.arcgis.com/experience/478220a4c454480e823b17327b2bf1d4</a> (Stand: 10.04.2020)</p></li>
+			<li><p id="r_RKIdaily">RKIdaily: Tägliche Lageberichte des RKI für Deutschland zu COVID-19, <a href="https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Situationsberichte/Archiv.html">Situationsberichte/Archiv</a> (Stand: 09.04.2020)</p></li>
+			<li><p id="r_RKI409">RKI409: an der Heiden M, Hamouda O: <a href="https://www.rki.de/DE/Content/Infekt/EpidBull/Archiv/2020/17/Art_02.html">Schätzung der aktuellen Entwicklung der SARS-CoV-2-Epidemie in Deutschland – Nowcasting</a>. Epid Bull 2020;17:10 – 15 | DOI 10.25646/6692 (Stand: 09.04.2020)</p></li>
+			<li><p id="r_JHUdash">JHUdash: <a href="https://coronavirus.jhu.edu/map.html">JHU Dashboard</a> (Stand: 10.04.2020)</p></li>
+			<li><p id="r_RKIdash">RKIdash: <a href="https://experience.arcgis.com/experience/478220a4c454480e823b17327b2bf1d4">RKI Dashboard</a> (Stand: 10.04.2020)</p></li>
+			<li><p id="r_CDCooi">CDCooi: <a href="https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/cases-in-us.html#epi-curve">CDC Lagebericht</a> (Stand: 10.04.2020)</p></li>
 		</ol>
 	</div>
   </section>
+
   <section>
 	  <h1>Timeline of this document</h1>
-	  <ol>
+	  <ul>
 		  <li><strong>02.04.2020:</strong> Project Start</li>
 		  <li><strong>10.04.2020:</strong> Initial Realease, Abb. 1</li>
-	  <ol>
+	  <ul>
   </section>
   <section>
-	  Kontakt: <a href="mailto:matthias.linden@gmx.de">matthias.linden@gmx.com</a> oder
-	  <a style="background-color:#ABF" href="https://twitter.com/matthiaslinden">matthiaslinden via Twitter</a>
-	  <p>Donate to <a href="bitcoin:bc1qhp4s53j0s9z7lhvwfangwf36epzqq0nz4zru4y">bc1qhp4s53j0s9z7lhvwfangwf36epzqq0nz4zru4y</a></p>
+	  <h3>Disclaimer</h3>
+	  <p></p>
+	  <h3>Kontakt</h3>
+	  <p>Kontakt: <a href="mailto:matthias.linden@gmx.de">matthias.linden@gmx.com</a> oder
+	  <a style="background-color:#ABF" href="https://twitter.com/matthiaslinden">matthiaslinden via Twitter</a> oder
+	  <p>
   </section>
   </div>
   <footer></footer>

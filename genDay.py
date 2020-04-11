@@ -1,7 +1,8 @@
 #!/usr/bin/env python3.7
 #coding:utf-8
 
-f = open("ByDate/200410.csv","r")
+f = open("ByDate/200409_Bulletin2.csv","r")
+#f = open("Bydate/200411.csv","r")
 lines = f.readlines()
 f.close()
 
@@ -37,7 +38,7 @@ def nextDay(m,d):
 
 si,sm = "",""
 j = 0
-startat = (3,4,)
+startat = (2,25,)
 m,d = startat
 p0 = 0
 for line in lines:

@@ -21,8 +21,13 @@ p {
 	opacity:.5;
 }
 
-.sources p {
-	width : 400px;
+#sources {
+	column-width : 400px;
+}
+
+#sources p {
+	width : 380px;
+	
 }
 
 /* Slider Stuff */
