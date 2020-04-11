@@ -22,4 +22,7 @@ onBodyLoad = function() {
 	var control = new Control(0,document.getElementById("GraphControl1"),data);
 	control.AddSubscriber("first",basegraph);
 	control.Draw();
+	
+	var ssGraph = new SimpleSimulationGraph(0,document.getElementById("simpleSimulator"));
+	
 }
