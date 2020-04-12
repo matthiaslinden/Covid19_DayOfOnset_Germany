@@ -53,30 +53,41 @@
   <h3>Vergleich der Lageberichte</h3>
   <p>Das CDC veröffentlicht für die USA regelmäßig neue Zahlen für <em>cases by date of onset of illness</em><sup><a href="#r_CDCooi">CDCooi</a></sup>.Verglichen mit den RKI-Berichten, werden die Zahlen zusammen mit der Grafik veröffentlicht, Daten vergangener Lageberichte stehen beim CDC nicht direkt zur Verfügung.</p>
   <p>Durch Vergleich der RKI Daten einzelner Lageberichte für Deutschland lassen sich Ausagen treffen, wann ein Krankheitsbeginn als neue Meldung in einem Lagebericht auftaucht.Mit Hilfe dieser Informationen lässt sicht abschätzen, wie groß der Anteil bereits erfasster Krankheitsfälle für einen Zeitpunkt ist. Je länger der Zeitpunkt des Krankheitsbeginns zurückliegt, desto mehr Fälle die an diesem Tage begonnen sind in nachfolgenden Lageberichten erfasst. </p>
+  
+  <h3>Dauer bis zur Meldung</h3>
+  <p>Erwartungsgemäß vergehen zwischen dem Beginn der Krankheit, der Laborbestätigung und Meldung eines Falls in einem Lagebericht mehrere Tage. Die folgende Grafik versucht einen Überblick über diesen Meldeverzug zu geben.</p>
+  <img src="graph/onsets_diff.svg" width="900px">
+  <div style="width:100%"><p><strong>Abb. 2:</strong>Verteilung der in einem Tagesbericht enthaltenen Fälle nach Meldedatum. Unten links: Anteil der Fälle an einem Datum. Unten rechts: Anteil der Fälle nach zeitlichem Abstand zum Krankheitsbeginn. Oben rechts: Entwicklung der bekannten Krankheitsbeginne für jeden Tag.</p></div>
+  <p>
+  Aus der oberen rechten Grafik lässt sich abschätzen, dass 5 Tage nach Krankheitsbeginn 10% der Fälle des Tages bekannt sind. Nach 10 Tagen sind 50% der Fälle erfasst, nach 20 Tagen 90% und nach 30 Tagen >95%. Für die frühen Fälle (zum Blauen hin) ist die Abschätzung schlecht, die Fallzahlen sind dort verglichen mit den anderen Kurven klein. Die neusten Fälle, deren Krankheitsbeginn weniger als 30 Tage zurückligt (gelb und hell-orange) sind nicht Grundlage des Fits (blau gestrichelt). Eine saubere Untersuchung nach festgelegten Kriterien steht aus, die Genannten Zahlen können als Richtwerte dienen.
+	  
+  </p>
   </section>
   
-  <section>
+  <!-- <section>
   <h3></h3>
 	  <div id="complexRKIgraphDiff"></div>
 	  <div style="width:100%"><p><strong>Abb. 2:</strong>Veränderung der Anzahl der bekannten Krankheitsbeginne in einem Lagebericht.</p></div>
   </section>
-  
+
   <section>
   <h1>Dynamik nach Aufhebung von Maßnahmen</h1>
   <p>
-  </p>
-  <h3>Rahmenbediungungen</h3><p>
+  </p> -->
+  
+
+  <!-- <h3>Rahmenbediungungen</h3><p>
   <ol>
 	  <li></li>
   </ol></p>
   <h3>Maßnamen</h3>
   <p></p>
-  
+
   <h3>Simulator</h3>
   <div id="simpleSimulator"></div>
   <div style="width:100%"><strong>Abb :</strong></div>
-  
-  </section>
+
+  </section> -->
   <section>
 	<h1>Quellen</h1>
 	<div id="sources">
@@ -95,16 +106,17 @@
 	  <ul>
 		  <li><strong>02.04.2020:</strong> Project Start</li>
 		  <li><strong>10.04.2020:</strong> Initial Realease, Abb. 1</li>
+		  <li><strong>12.04.2020:</strong> Abb. 2</li>
 	  <ul>
   </section>
   <section>
 	  <h3>Disclaimer</h3>
-	  <p>
-	  	Donate to <a href="bitcoin:bc1qhp4s53j0s9z7lhvwfangwf36epzqq0nz4zru4y">bc1qhp4s53j0s9z7lhvwfangwf36epzqq0nz4zru4y</a>
+	  <p>Ich arbeite an diesem Projekt in meiner Freizeit, um mir (und anderen) ein besseres Bild der Lage zu Verschaffen. Expoenentilles Wachstum beschäftigt mich schon seit Jahren. Fell free to donate to <a href="bitcoin:bc1qhp4s53j0s9z7lhvwfangwf36epzqq0nz4zru4y">bc1qhp4s53j0s9z7lhvwfangwf36epzqq0nz4zru4y</a> to support my work if You learned something here.
 	  </p>
 	  <h3>Kontakt</h3>
 	  <p>Kontakt: <a href="mailto:matthias.linden@gmx.de">matthias.linden@gmx.com</a> oder
 	  <a style="background-color:#ABF" href="https://twitter.com/matthiaslinden">matthiaslinden via Twitter</a><p>
+      <p>github <a href="https://github.com/matthiaslinden/Covid19_DayOfOnset_Germany">matthiaslinden/Covid19_DayOfOnset_Germany</a></p>
   </section>
   </div>
   <footer></footer>

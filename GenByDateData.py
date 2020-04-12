@@ -5,6 +5,12 @@
 import time
 from matplotlib import pyplot as plt
 from scipy.stats import beta
+from matplotlib import rc
+rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
+## for Palatino and other serif fonts use:
+#rc('font',**{'family':'serif','serif':['Palatino']})
+rc('text', usetex=True)
+
 import numpy as np
 
 import json
@@ -459,7 +465,7 @@ class ByDateOfOnset(object):
 		plasma = plt.cm.plasma
 		
 		fig = plt.figure(1,figsize=(15,12.5),frameon=True)
-		fig.subplots_adjust(wspace=0.13,hspace=0.1,left=0.05,right=0.98,top=0.965,bottom=0.05)
+		fig.subplots_adjust(wspace=0.15,hspace=0.14,left=0.05,right=0.98,top=0.965,bottom=0.05)
 		bx = plt.subplot(221)
 		ax = plt.subplot(222)
 		cx = plt.subplot(223)
@@ -492,11 +498,11 @@ class ByDateOfOnset(object):
 				if j >= ids[-1]:
 					bx.plot(range(len(dd)), ma,color=(0,0,0) ,zorder=0,alpha=.7,label=label,gid="by_onset_%d"%(self.dates[j]) )
 					cx.plot(range(len(dd)),s,color=(0,0,0),alpha=.7)
-					dx.plot(np.array(range(len(dd)))-(l+j),s,color=(0,0,0),alpha=0.7,zorder=l-j)
+					dx.plot(-np.array(range(len(dd)))+(l+j)-5,s,color=(0,0,0),alpha=0.7,zorder=l-j)
 				else:
 					bx.fill(range(len(dd)), ma,color=c ,zorder=l-j,alpha=.5,label=label)
 					cx.fill(range(len(dd)),s,color=c,alpha=.7)
-					dx.plot(np.array(range(len(dd)))-(l+j),s,color=c,alpha=.5,zorder=l-j)
+					dx.plot(-np.array(range(len(dd)))+(l+j)-5,s,color=c,alpha=.7*(min(1,(10+i)/30.)),zorder=l-j)
 				
 				
 		
@@ -505,7 +511,7 @@ class ByDateOfOnset(object):
 		cx.set_xticks(range(len(self.days))[::2])
 		cx.set_xticklabels(self.days[::2],rotation=40,horizontalalignment='right')
 		
-		dx.set_xlim(-35,4)
+		dx.set_xlim(-2,35)
 		
 		#print(self.datasets.keys(),dsname)
 		
@@ -517,7 +523,7 @@ class ByDateOfOnset(object):
 			#	b = np.linspace(0,self.ddays[self.dates[i]],1)
 				b = np.array(range(len(dd)))-i+self.ddays[self.dates[0]]
 				
-				ax.plot(b,a,color=c)
+				ax.plot(b,a,color=c,alpha=.9*(min(1,(10+i)/30.)))
 		
 		# Beta Distribution Test
 		x = np.linspace(0,40,41)
@@ -525,15 +531,30 @@ class ByDateOfOnset(object):
 		
 		
 		a,b,ll,sc = beta.fit([1/8.]*10+[1/4.]*40+[1/2.]*40+[3/4.]*10)
-		for a,b in [(2,6),(2.4,6.5),(2.6,4.4)]:	# 2/6 optimisitc, early best, late best for march	#,(2.45,5.9)
-			ax.plot(x,beta.cdf(x/40.,a,b) ,"b--")
-			print(beta.cdf(np.array([1/8.,1/4.,1/2.,3/4.,1]),a,b))
+		for a,b in [(2.4,6.5)]:#,(2,6),,(2.6,4.4)]:	# early best, 2/6 optimisitc,  late best for march	#,(2.45,5.9)
+			ax.plot(x,beta.cdf(x/40.,a,b) ,"b--",linewidth=2.)
+		ax.text(25,0.4,r"Beta-CDF($\alpha=2.4,\beta=6.5$)")
+		ax.plot([22,24],[0.41,0.41],"b--",linewidth=2.)
+		
+		print(beta.cdf(np.array([1/8.,1/4.,1/2.,3/4.,1]),a,b))
 		print(beta.pdf(x/40,2.4,6.5))
 		ax.set_xlim(-1,40)
 		bx.legend(loc=2)
 		
+		bx.set_title("daily distribution of cases of with known onset of illness per report")
+		
+		cx.set_title("same as above, scaled for unity area")
+		bx.set_ylabel("cases per day in a report")
+		cx.set_ylabel("proportion per day in a report")
+		dx.set_title("same as left, but mirrored and shifted")
+		dx.set_xlabel("days since onset of illness on day of reporting (distribution)")
+		
+		ax.set_title("cummulative distribution of cases by days since onset of illness")
+		ax.set_xlabel("days since onset of onset of illness on day of report = days since first reported onset for a date")
+		ax.set_ylabel("commulative proportion per date")
+		
 		plt.savefig("%s.pdf"%dsname)##
-		plt.savefig("%s.svg"%dsname)##
+		plt.savefig("page/graph/%s.svg"%dsname)##
 		plt.close()
 	
 	def PlotOverview(self):
@@ -563,7 +584,27 @@ class ByDateOfOnset(object):
 		
 		plt.savefig("test.pdf")
 		plt.close()
-		
+	
+	def ExportRKIBulletin200409(self):
+		rki = self.raw.byDateOfReporting_RKI
+		charts = ["bydate_observed","bydate_imputiert","bydate_Nowcast_low","bydate_Nowcast","bydate_Nowcast_high"]
+		csum = {}
+		for k in charts:
+			csum[k] = 0
+		ds = "dmy_date,"+",".join(charts)+"\n"
+		for i,day in enumerate(rki["days"]):
+			y,m,d,f = day//10000,(day//100)%100,day%100,28
+			s = "%02d-%02d-%d"%(d,m,y+2000)
+			for k in charts:
+				v = rki[200409][k][i]
+				csum[k] += v
+				s += ",%d"%(csum[k])
+			ds += s+"\n"
+		print(ds)
+		f = open("rki_bulletin200409_EpiCurve.csv","w+")
+		f.write(ds)
+		f.close()
+	
 	def DumpJSON(self,fname="page/script/data.json"):
 		ex = {"dates":self.dates,"ddates":self.ddates,"days":self.days,"ddays":self.ddays,"datasets":self.datasets}
 		f = open(fname,"w+")
@@ -580,6 +621,7 @@ class ByDateOfOnset(object):
 		
 def main():
 	bydate = ByDateOfOnset()
+#	bydate.ExportRKIBulletin200409()
 	bydate.DumpJSON()
 
 

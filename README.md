@@ -5,8 +5,8 @@
 
 An up to date version of the Website is available at http://mlinden.de/COVID19/index.html
 
-## onset of illness data
-For proper simulation of the outbreak with a SIR or SIRE model, date of onset of illness is crucial if modeling of the reporting process is omitted. Unfortunately the publicly available databases behind RKI's  or JHU's dashboard don't supply this information. The RKI publishes daily situation reports (<a href="https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Situationsberichte/Gesamt.html">RKI daily report</a>) which contain a graph of cases by date of onset of illness. These graphs are digitized, the data is postprocessed (light cleanup und formating) and output as a .json file to be used in a dynamic plot on my website.
+## onset of illness data / Epi Curve
+For proper simulation of the outbreak with a SIR or SIRE model, date of onset of illness (Epi Curve) is crucial if modeling of the reporting process is omitted. Unfortunately the publicly available databases behind RKI's  or JHU's dashboard don't supply this information. The CDC publishes an Epi Curve along with a table of values (<a href="https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/cases-in-us.html#epi-curve">CDC Epi Curve<>). The RKI publishes daily situation reports (<a href="https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Situationsberichte/Gesamt.html">RKI daily report</a>) which contain a graph of cases by date of onset of illness. Unfortunately no machine-readable values are available. These graphs were digitized, the data is postprocessed (light cleanup und formating) and output as a .json file to be used in a dynamic plot on my website. 
 
 ### projection and missing data (work in progress)
 The RKI's graph conaints both counts for cases with known date of onset as well as counts for case-reports without that data or asymptomatic cases. These cases could be allocated to a date of onset based on yet to be determined assumptions...
@@ -15,7 +15,12 @@ The RKI's graph conaints both counts for cases with known date of onset as well 
 A quick glance indicates that 5 days after date of onset of illness 10% of cases are reported, 50% after 10 days, 90% after 20 days and >95% after 30 days. The shape of the distribution of time_since_onset for casees in a report varies with time.
 
 <p float="left">
-	<img src="onsets_diff.svg" height="600">
+	<img src="page/graph/onsets_diff.svg" height=600>
+</p>
+
+
+<p float="left">
+	<img src="page/graph/compRKI.svg" height=500>
 </p>
 
 ## goal

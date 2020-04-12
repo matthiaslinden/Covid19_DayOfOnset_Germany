@@ -102,8 +102,8 @@ class SimpleSimulationGraph {
 		this.yAxis = this.svg.append("g")
 			.call(d3.axisLeft(this.y));
 		
-		this.lin
+//		this.lin
 		
-		this.
+//		this.
 	}
 }
