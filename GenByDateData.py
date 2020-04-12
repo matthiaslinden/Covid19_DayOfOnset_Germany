@@ -231,7 +231,11 @@ class GenByDateOfOnset(object):
 		daten200411_meldung = {200304:39,200305:45,200306:73,200307:17,200308:11,200309:96,200310:123,200311:196,200312:275,200313:426,200314:449,200315:353,200316:644,200317:1065,200318:1205,200319:1278,200320:1323,200321:1104,200322:707,200323:1081, 200324:1468,200325:1742,200326:1833,200327:2141,200328:1636,200329:1104,200330:1513,200331:2225,200401:2354,200402:2595,200403:2763,200404:1692,200405:1043,200406:1614,200407:2136,200408:2567,200409:2382,200410:841}
 		daten200411_symptoms = {"symptoms_n":90025,"cough_symtom":.51*90025,"hospitalized":13661,"pneumonia":2113}
 		daten[200411] = {"bydate":daten200411_begin,"bymeldung":daten200411_meldung,"labtested_n":117658,"symptoms":daten200411_symptoms,"deaths":2544,"recovered":57400,"scaling":7000,"R_est":(1.3,1.1,1.7)}
-
+		
+		daten200412_begin = {200224:49,200225:85,200226:126,200227:134,200228:171,200229:154,200301:162,200302:248,200303:232,200304:321,200305:337,200306:524,200307:695,200308:906,200309:1385,200310:1751,200311:2226,200312:2409,200313:2981,200314:3042,200315:3111,200316:4090,200317:3465,200318:3526,200319:3046,200320:3505,200321:2855,200322:2327,200323:3318,200324:2498,200325:2669,200326:2364,200327:2376,200328:2234,200329:1755,200330:2372,200331:1755,200401:1901,200402:1698,200403:1596,200404:1125,200405:942,200406:971,200407:597,200408:378,200409:219,200410:28}
+		daten200412_meldung = {200224:8,200225:0,200226:0,200227:16,200228:16,200229:13,200301:21,200302:8,200303:12,200304:28,200305:45,200306:57,200307:16,200308:20,200309:98,200310:146,200311:199,200312:284,200313:435,200314:443,200315:354,200316:642,200317:1072,200318:1198,200319:1272,200320:1337,200321:1093,200322:723,200323:1065,200324:1462,200325:1734,200326:1828,200327:2128,200328:1629,200329:1064,200330:1487,200331:2177,200401:2319,200402:2587,200403:2783,200404:1678,200405:1044,200406:1645,200407:2149,200408:2522,200409:2454,200410:1455,200411:536}
+		daten200412_symptoms = {"symptoms_n":92361,"cough_symtom":.51*92361,"hospitalized":14129,"pneumonia":2180,"ICU":2405+2978}
+		daten[200412] = {"bydate":daten200412_begin,"bymeldung":daten200412_meldung,"labtested_n":120479,"symptoms":daten200412_symptoms,"deaths":2673,"recovered":60300,"scaling":5000,"R_est":(1.3,1.,1.6)}
 		
 		# daten200403_begin = {}
 		# daten200403_meldung = {}
@@ -541,7 +545,7 @@ class ByDateOfOnset(object):
 		ax.set_xlim(-1,40)
 		bx.legend(loc=2)
 		
-		bx.set_title("daily distribution of cases of with known onset of illness per report")
+		bx.set_title("daily distribution of cases with known onset of illness per report")
 		
 		cx.set_title("same as above, scaled for unity area")
 		bx.set_ylabel("cases per day in a report")
@@ -549,7 +553,7 @@ class ByDateOfOnset(object):
 		dx.set_title("same as left, but mirrored and shifted")
 		dx.set_xlabel("days since onset of illness on day of reporting (distribution)")
 		
-		ax.set_title("cummulative distribution of cases by days since onset of illness")
+		ax.set_title("cummulative distribution of cases for every date (not report) by days since onset of illness")
 		ax.set_xlabel("days since onset of onset of illness on day of report = days since first reported onset for a date")
 		ax.set_ylabel("commulative proportion per date")
 		
