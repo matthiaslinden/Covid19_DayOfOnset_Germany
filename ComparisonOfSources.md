@@ -1,6 +1,6 @@
 # Comparison of different sources for EpiCurve / date of onset of illness
 The following sources are compared:
-* RKI daily situation reports digitized versions of fig. 3 on page 3 or 4. Contains EpiCurve: daily counts for known dates of onset and unknwons/asymptomatic (up to 13.04.2020) visit: http://www.mlinden.de/COVID19/ for more detailed review.
+* RKI daily situation reports digitized versions of fig. 3 on page 3 or 4. Contains EpiCurve: daily counts for known dates of onset and unknwons/asymptomatic (up to 13.04.2020) visit: <a href="http://www.mlinden.de/COVID19/index.html">mlinden.de/COVID19/</a> for more detailed review.
 * RKI bulletin 09.04.2020 (https://www.rki.de/DE/Content/Infekt/EpidBull/Archiv/2020/17/Art_02.html) contains daily counts for knwon cases and some magic to distribute unknown/asymptomatic 
 * RKI database counts from https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/dd4580c810204019a7b8eb3e0b329dd6_0 , assuming "Refdatum" is date of onset of illness. Data downloaded 13.04.2020 22:00
 
