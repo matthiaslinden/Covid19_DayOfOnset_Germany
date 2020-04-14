@@ -2,7 +2,7 @@
 #coding:utf-8
 
 #f = open("ByDate/200409_Bulletin2.csv","r")
-f = open("Bydate/200412.csv","r")
+f = open("ByDate/200412.csv","r")
 lines = f.readlines()
 f.close()
 
