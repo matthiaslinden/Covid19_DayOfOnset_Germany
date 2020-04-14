@@ -13,30 +13,30 @@ Uses data supplied by https://github.com/Priesemann-Group/covid19_inference_fore
 
 ## Meldedatum and Refdatum vs. arcgis Database Download
 <p float="left">
-	<img src="https://github.com/matthiaslinden/Covid19_DayOfOnset_Germany/raw/master/page/graph/graph/MeldeVsRefdatum.svg?sanitize=true" height=500>
+	<img src="/page/graph/graph/MeldeVsRefdatum.svg" height=500>
 </p>
 ## Refdatum vs. EpiCurve
 <p float="left">
-	<img src="https://github.com/matthiaslinden/Covid19_DayOfOnset_Germany/raw/master/page/graph/arcgisVsEpiCurve.svg" height=500>
+	<img src="/page/graph/arcgisVsEpiCurve.svg" height=500>
 </p>
 Meldedatum > Refdatum is similar to EpiCurve from daily reports, but arcgis reports slightly lower numbers.
 ## EpiCurves from different KRI publications daily and 09.04.2020 bulletin
 <p float="left">
-	<img src="https://github.com/matthiaslinden/Covid19_DayOfOnset_Germany/raw/master/page/graph/EpiCurveVSarcgisVSbulletin200409.svg" height=500>
+	<img src="/page/graph/EpiCurveVSarcgisVSbulletin200409.svg" height=500>
 </p>
 EpiCurves from
 ## Residuals unknonw + asymptomatic vs. Refdatum==Meldedatum
 <p float="left">
-	<img src="https://github.com/matthiaslinden/Covid19_DayOfOnset_Germany/raw/master/page/graph/UnknownsArcgisVsEpiCurve.svg" height=500>
+	<img src="/page/graph/UnknownsArcgisVsEpiCurve.svg" height=500>
 </p>
 Number of residual cases form arcgis is about half of unknown + asymptomatic from daily situation report. Imputated curve from 09.04.2020 Bulletin covers comparable case-number, but moves them at least a week earlier.
 ## Meldedatum vs. EpiCurve
 <p float="left">
-	<img src="https://github.com/matthiaslinden/Covid19_DayOfOnset_Germany/raw/master/page/graph/EpiVsMeldung.svg" height=500>
+	<img src="/page/graph/EpiVsMeldung.svg" height=500>
 </p>
 ## Shape of delay distribution
 <p float="left">
-	<img src="https://github.com/matthiaslinden/Covid19_DayOfOnset_Germany/raw/master/page/graph/EpiVsMeldungDelay.svg" height=500>
+	<img src="/page/graph/EpiVsMeldungDelay.svg" height=500>
 </p>
 Delay between Refdatum and Meldedatum for different cutoffs of maturity of Refdatum.
 

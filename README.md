@@ -19,9 +19,9 @@ A quick glance indicates that 5 days after date of onset of illness 10% of cases
 </p>
 
 
-<p float="left">
+<!-- <p float="left">
 	<img src="page/graph/compRKI.svg" height=500>
-</p>
+</p> -->
 
 ## goal
 Supply an independant estimate for the parameter R based on publicly available data in order to educate (myself at the moment) about processes involved between infection and reporting.
