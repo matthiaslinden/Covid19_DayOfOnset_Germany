@@ -13,8 +13,9 @@ Uses data supplied by https://github.com/Priesemann-Group/covid19_inference_fore
 
 ## Meldedatum and Refdatum vs. arcgis Database Download
 <p float="left">
-	<img src="/page/graph/graph/MeldeVsRefdatum.svg" height=500>
+	<img src="/page/graph/MeldeVsRefdatum.svg" height=500>
 </p>
+Comparison of Meldedatum and Refdatum from RKI's arcgis Database. Unfortunately only 91k of 123k cases
 ## Refdatum vs. EpiCurve
 <p float="left">
 	<img src="/page/graph/arcgisVsEpiCurve.svg" height=500>
