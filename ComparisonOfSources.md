@@ -16,25 +16,30 @@ Uses data supplied by https://github.com/Priesemann-Group/covid19_inference_fore
 	<img src="/page/graph/MeldeVsRefdatum.svg" height=500>
 </p>
 Comparison of Meldedatum and Refdatum from RKI's arcgis Database. Unfortunately only 91k of 123k cases
+
 ## Refdatum vs. EpiCurve
 <p float="left">
 	<img src="/page/graph/arcgisVsEpiCurve.svg" height=500>
 </p>
 Meldedatum > Refdatum is similar to EpiCurve from daily reports, but arcgis reports slightly lower numbers.
+
 ## EpiCurves from different KRI publications daily and 09.04.2020 bulletin
 <p float="left">
 	<img src="/page/graph/EpiCurveVSarcgisVSbulletin200409.svg" height=500>
 </p>
-EpiCurves from
+EpiCurves from all 3 RKI sources: arcgis, daily situation report and bulletin. Nowcast ans Imputated are estimates within the RKI's model. The bulletin's EpiCurve diverges from the ones published in the situation reports. Both in initial slopa as well as absence of weekend-modulation. The yellow (unknown onset + asympotomatic) are the same cases as yellow dashed Imputated. (unknown onset + asymptomatic) don't have an onset of illness and have to estimated.
+
 ## Residuals unknonw + asymptomatic vs. Refdatum==Meldedatum
 <p float="left">
 	<img src="/page/graph/UnknownsArcgisVsEpiCurve.svg" height=500>
 </p>
 Number of residual cases form arcgis is about half of unknown + asymptomatic from daily situation report. Imputated curve from 09.04.2020 Bulletin covers comparable case-number, but moves them at least a week earlier.
+
 ## Meldedatum vs. EpiCurve
 <p float="left">
 	<img src="/page/graph/EpiVsMeldung.svg" height=500>
 </p>
+
 ## Shape of delay distribution
 <p float="left">
 	<img src="/page/graph/EpiVsMeldungDelay.svg" height=500>
